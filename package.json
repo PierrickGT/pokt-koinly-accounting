@@ -1,0 +1,23 @@
+{
+  "name": "graphql-query-template",
+  "version": "1.0.0",
+  "description": "Template repository to kickstart a project to query GraphQL endpoints",
+  "main": "index.js",
+  "repository": "git@github.com:pooltogether/graphql-query-template.git",
+  "author": "PoolTogether Inc.",
+  "license": "GPL-3.0",
+  "scripts": {
+    "format": "prettier --config .prettierrc --write \"**/*.{ts,js}\"",
+    "format:file": "prettier --config .prettierrc --write",
+    "start": "ts-node request.ts"
+  },
+  "dependencies": {
+    "graphql": "16.3.0",
+    "graphql-request": "4.1.0"
+  },
+  "devDependencies": {
+    "prettier": "2.6.0",
+    "ts-node": "10.7.0",
+    "typescript": "4.6.2"
+  }
+}

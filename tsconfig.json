@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "importHelpers": false,
+    "module": "commonjs",
+    "outDir": "dist",
+    "strict": true,
+    "target": "esnext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+  },
+}
