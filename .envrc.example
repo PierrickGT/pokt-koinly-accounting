@@ -1,0 +1,5 @@
+# POKTscan API key
+export POKTSCAN_API_KEY='';
+
+# Node address
+export NODE_ADDRESS = '';
