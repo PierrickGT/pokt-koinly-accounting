@@ -2,4 +2,4 @@
 export POKTSCAN_API_KEY='';
 
 # Node address
-export NODE_ADDRESS = '';
+export NODE_ADDRESS='';
