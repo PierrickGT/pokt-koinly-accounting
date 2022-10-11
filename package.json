@@ -9,7 +9,8 @@
     "prepare": "husky install",
     "format": "prettier --config .prettierrc --write \"**/*.{ts,js}\"",
     "format:file": "prettier --config .prettierrc --write",
-    "start": "ts-node request.ts"
+    "getRewards": "ts-node scripts/getRewards.ts",
+    "getTransfers": "ts-node scripts/getTransfers.ts"
   },
   "dependencies": {
     "axios": "0.27.2",

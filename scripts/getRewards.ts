@@ -4,12 +4,12 @@ import fs from 'fs';
 import path from 'path';
 import { parse } from 'json2csv';
 
-import getNodeRelays from './utils/request/getNodeRelays';
-import getNodeBlocksProduced from './utils/request/getNodeBlocksProduced';
+import getNodeRelays from '../utils/request/getNodeRelays';
+import getNodeBlocksProduced from '../utils/request/getNodeBlocksProduced';
 
-import { POKTSCAN_API_ENDPOINT } from './utils/Constants';
+import { POKTSCAN_API_ENDPOINT } from '../utils/Constants';
 
-const request = async () => {
+const getRewards = async () => {
   const poktScan = axios.create({
     baseURL: POKTSCAN_API_ENDPOINT,
     timeout: 5000,
@@ -21,8 +21,8 @@ const request = async () => {
   });
 
   const nodeAddress = process.env.NODE_ADDRESS as string;
-  const startDate = new Date('2022-01-01');
-  const endDate = new Date('2022-01-31');
+  const startDate = new Date('2022-07-01');
+  const endDate = new Date('2022-07-31');
 
   const nodeRelaysRewards = await getNodeRelays(poktScan, nodeAddress, startDate, endDate);
   const blockProducerRewards = await getNodeBlocksProduced(
@@ -42,7 +42,7 @@ const request = async () => {
   });
 
   fs.writeFile(
-    path.join(__dirname, 'results', `${nodeAddress}_01-2022.csv`),
+    path.join(__dirname, '../results', `${nodeAddress}_07-2022.csv`),
     csv,
     function (error) {
       if (error) {
@@ -52,4 +52,4 @@ const request = async () => {
   );
 };
 
-request();
+getRewards();

@@ -11,13 +11,35 @@ Once written down, load your env with:
 direnv allow
 ```
 
-In [request.ts](./request.ts), you can adjust the date range by modifying [`startDate`](./request.ts#L24) and [`endDate`](./request.ts#L25).
+### getRewards
 
-You can also modify the CSV filename and export path on [line 45](./request.ts#L45).
+The [getRewards.ts](./scripts/getRewards.ts) script, retrieves rewards for relays and blocks produces by your node.
+
+You can adjust the date range by modifying [`startDate`](./scripts/getRewards.ts#L24) and [`endDate`](./scripts/getRewards.ts#L25).
+
+You can also modify the CSV filename and export path on [line 45](./scripts/getRewards.ts#L45).
 
 Once your setup is done, generate your CSV export with the following command:
 ```
-yarn start
+yarn getRewards
+```
+
+### getTransfers
+
+The [getTransfers.ts](./scripts/getTransfers.ts) script, retrieves transfers from your node to another address.
+
+You need to add the `TO_ADDRESS` to your `.envrc` and load it with:
+```
+direnv allow
+```
+
+You can adjust the date range by modifying [`startDate`](./scripts/getTransfers.ts#L23) and [`endDate`](./scripts/getTransfers.ts#L24).
+
+You can also modify the CSV filename and export path on [line 39](./scripts/getTransfers.ts#L39).
+
+Once your setup is done, generate your CSV export with the following command:
+```
+yarn getTransfers
 ```
 
 ## Development
@@ -48,5 +70,5 @@ yarn format
 Or per file:
 
 ```
-yarn format:file request.ts
+yarn format:file ./scripts/getRewards.ts
 ```

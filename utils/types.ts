@@ -79,9 +79,39 @@ export type NodeRelay = {
   serviced: [ServicedNodeRelays];
 };
 
+export type PageInfo = {
+  total: number;
+  limit: number;
+  page: number;
+};
+
+export type Transaction = {
+  _id: string;
+  hash: string;
+  height: number;
+  amount: number;
+  block_time: string;
+  from_address: string;
+  index: number;
+  memo: string;
+  parse_time: string;
+  result_code: number;
+  to_address: string;
+  total_fee: number;
+  total_proof: string;
+  total_pokt: number;
+  type: string;
+  chain: string;
+  app_public_key: string;
+  claim_tx_hash: string;
+  expiration_height: number;
+  session_height: number;
+  pending: boolean;
+};
+
 /* App types */
 
-export type KoinlyReward = {
+export type KoinlyTransaction = {
   'Koinly Date': Date;
   Amount: number;
   Currency: string;

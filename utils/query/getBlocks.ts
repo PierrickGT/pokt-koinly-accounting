@@ -1,12 +1,12 @@
 import { AxiosInstance } from 'axios';
 
-import { NodeRelay } from '../types';
+import { Block } from '../types';
 
-type getBlockProducerResponse = {
+type getBlockResponse = {
   data: {
     data: {
       blocks: {
-        items: NodeRelay[];
+        items: Block[];
       };
     };
   };
@@ -16,7 +16,7 @@ export async function getFirstBlock(
   poktScan: AxiosInstance,
   startDate: Date,
   endDate: Date
-): Promise<any> {
+): Promise<Block | void> {
   endDate.setUTCHours(23, 59, 59, 999);
 
   const query = `
@@ -38,7 +38,7 @@ export async function getFirstBlock(
 
   return poktScan
     .post('', { query })
-    .then((response: getBlockProducerResponse) => {
+    .then((response: getBlockResponse) => {
       return response.data.data.blocks.items[0];
     })
     .catch((error: Error) => {
@@ -50,7 +50,7 @@ export async function getLastBlock(
   poktScan: AxiosInstance,
   startDate: Date,
   endDate: Date
-): Promise<any> {
+): Promise<Block | void> {
   endDate.setUTCHours(23, 59, 59, 999);
 
   const query = `
@@ -72,7 +72,7 @@ export async function getLastBlock(
 
   return poktScan
     .post('', { query })
-    .then((response: getBlockProducerResponse) => {
+    .then((response: getBlockResponse) => {
       return response.data.data.blocks.items[0];
     })
     .catch((error: Error) => {

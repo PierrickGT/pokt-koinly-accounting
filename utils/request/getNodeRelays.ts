@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import getRelays from '../query/getRelays';
 
 import { formatChain, relayFee } from '../helpers';
-import { NodeRelay, KoinlyReward } from '../types';
+import { NodeRelay, KoinlyTransaction } from '../types';
 
 export default async function getNodeRelays(
   poktScan: AxiosInstance,
@@ -13,7 +13,7 @@ export default async function getNodeRelays(
 ) {
   const nodeRelays = (await getRelays(poktScan, nodeAddress, startDate, endDate)) as NodeRelay[];
 
-  const rewards: KoinlyReward[] = [];
+  const rewards: KoinlyTransaction[] = [];
 
   nodeRelays.map(async (relay: NodeRelay) => {
     const date = new Date(Number(relay.block_time));

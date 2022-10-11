@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 
 import { getFirstBlock, getLastBlock } from './getBlocks';
-import { NodeRelay } from '../types';
+import { Block, NodeRelay } from '../types';
 
 type getRelaysResponse = {
   data: {
@@ -19,8 +19,8 @@ export default async function getRelays(
   startDate: Date,
   endDate: Date
 ): Promise<void | NodeRelay[]> {
-  const firstBlock = await getFirstBlock(poktScan, startDate, endDate);
-  const lastBlock = await getLastBlock(poktScan, startDate, endDate);
+  const firstBlock = (await getFirstBlock(poktScan, startDate, endDate)) as Block;
+  const lastBlock = (await getLastBlock(poktScan, startDate, endDate)) as Block;
 
   const query = `
     query {

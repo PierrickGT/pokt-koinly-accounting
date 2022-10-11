@@ -3,3 +3,6 @@ export POKTSCAN_API_KEY='';
 
 # Node address
 export NODE_ADDRESS='';
+
+# To address
+export TO_ADDRESS='';

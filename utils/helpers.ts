@@ -24,7 +24,7 @@ export const formatChain = (chainId: string) => {
   }
 };
 
-const toDecimal = (number: bigint | string) => Number(number) * 0.000001;
+export const toDecimal = (number: bigint | number | string) => Number(number) * 0.000001;
 
 export const getBlockProducerReward = (totalMinted: bigint, feeMultiplier: string) =>
   toDecimal(totalMinted) * toDecimal(feeMultiplier);

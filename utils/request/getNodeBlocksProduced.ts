@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios';
 import getBlockProducer from '../query/getBlockProducer';
 
 import { getBlockProducerReward } from '../helpers';
-import { Block, KoinlyReward } from '../types';
+import { Block, KoinlyTransaction } from '../types';
 
 export default async function getNodeBlocksProduced(
   poktScan: AxiosInstance,
@@ -18,7 +18,7 @@ export default async function getNodeBlocksProduced(
     endDate
   )) as Block[];
 
-  const rewards: KoinlyReward[] = [];
+  const rewards: KoinlyTransaction[] = [];
 
   nodeBlocksProduced.map((block: Block) => {
     const date = new Date(block.time);
