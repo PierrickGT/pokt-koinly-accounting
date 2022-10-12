@@ -31,10 +31,9 @@ export default async function getBlockProducer(
       ) {
         items {
           _id
-          fee_multiplier
+          producer_rewards
           height
           producer
-          total_minted
           time
         }
       }

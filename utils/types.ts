@@ -44,6 +44,30 @@ export type Block = {
   total_bad_txs: bigint;
   proof_msgs: number;
   bad_txs_count_by_error: string;
+  block_size: number;
+  state_size: number;
+  total_size: number;
+  monetary: {
+    m0: number;
+    ms: number;
+    mu: number;
+    mb: number;
+  };
+  node_rewards: number;
+  producer_rewards: number;
+  dao_rewards: number;
+  stake_weight_summary: [
+    {
+      weight: number;
+      staked_nodes: bigint;
+      unstaking_nodes: bigint;
+      jailed: bigint;
+      tokens: bigint;
+    }
+  ];
+  node_earning_multiplier: number;
+  dao_earning_multiplier: number;
+  proposer_earning_multiplier: number;
 };
 
 type BlockSupply = {

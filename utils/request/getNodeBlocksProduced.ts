@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 
 import getBlockProducer from '../query/getBlockProducer';
 
-import { getBlockProducerReward } from '../helpers';
+import { toDecimal } from '../helpers';
 import { Block, KoinlyTransaction } from '../types';
 
 export default async function getNodeBlocksProduced(
@@ -25,7 +25,7 @@ export default async function getNodeBlocksProduced(
 
     rewards.push({
       'Koinly Date': date,
-      Amount: getBlockProducerReward(block.total_minted, block.fee_multiplier),
+      Amount: toDecimal(block.producer_rewards),
       Currency: 'POKT',
       Label: 'mining',
       Description: `Producer of block ${block.height} for POKT chain`,
