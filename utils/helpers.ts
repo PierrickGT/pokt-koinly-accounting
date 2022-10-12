@@ -19,12 +19,11 @@ export const formatChain = (chainId: string) => {
       return 'Gnosis - xDai (0027)';
     case '0040':
       return 'Harmony Shard 0 (0040)';
+    case '0053':
+      return 'Optimism Mainnet (0053)';
     default:
       return 'Unknown chain';
   }
 };
 
 export const toDecimal = (number: bigint | number | string) => Number(number) * 0.000001;
-
-export const getBlockProducerReward = (totalMinted: bigint, feeMultiplier: string) =>
-  toDecimal(totalMinted) * toDecimal(feeMultiplier);
