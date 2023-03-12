@@ -21,6 +21,8 @@ export const formatChain = (chainId: string) => {
       return 'Harmony Shard 0 (0040)';
     case '0053':
       return 'Optimism Mainnet (0053)';
+    case '0066':
+      return 'Arbitrum One (0066)';
     default:
       return 'Unknown chain';
   }
