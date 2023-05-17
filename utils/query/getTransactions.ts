@@ -6,7 +6,7 @@ import { Block, PageInfo, Transaction } from '../types';
 type getTransactionsResponse = {
   data: {
     data: {
-      transactions: {
+      ListPoktTransaction: {
         items: Transaction[];
         pageInfo: PageInfo;
       };
@@ -26,18 +26,46 @@ export default async function getTransactions(
 
   const query = `
     query {
-      transactions(
-        page: 1,
-        limit: 1000,
-        search: "",
-        sort: [{property: "height",direction: 1}]
-        filter: "[[[\\"from_address\\",\\"=\\",\\"${nodeAddress}\\"],\\"and\\",[\\"to_address\\",\\"=\\",\\"${toAddress}\\"]],\\"and\\",[[\\"block_time\\",\\">=\\",\\"${firstBlock.time}\\"],\\"and\\",[\\"block_time\\",\\"<=\\",\\"${lastBlock.time}\\"]]]"
-      ) {
-        pageInfo {
-          total
-          limit
-          page
+      ListPoktTransaction(
+        pagination: {
+          limit: 1000,
+          filter: {
+            operator: AND,
+            properties: [
+              {
+                  property: "from_address",
+                  operator: EQ,
+                  type: STRING,
+                  value: "${nodeAddress}"
+              },
+              {
+                  property: "to_address",
+                  operator: EQ,
+                  type: STRING,
+                  value: "${toAddress}"
+              }
+            ],
+            filters: [{
+              operator: AND,
+              properties: [
+                {
+                    property: "block_time",
+                    operator: GTE,
+                    type: STRING,
+                    value: "${firstBlock.time}"
+                },
+                {
+                    property: "block_time",
+                    operator: LTE,
+                    type: STRING,
+                    value: "${lastBlock.time}"
+                }
+              ],
+            }]
+          },
+          sort: [{property: "height",direction: 1}]
         }
+      ) {
         items {
           _id
           hash
@@ -68,7 +96,7 @@ export default async function getTransactions(
   return poktScan
     .post('', { query })
     .then((response: getTransactionsResponse) => {
-      return response.data.data.transactions.items;
+      return response.data.data.ListPoktTransaction.items;
     })
     .catch((error: Error) => {
       console.error('Failed to retrieve Transactions: ', error);

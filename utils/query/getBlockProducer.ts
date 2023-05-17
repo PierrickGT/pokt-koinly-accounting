@@ -5,7 +5,7 @@ import { Block } from '../types';
 type getBlockProducerResponse = {
   data: {
     data: {
-      blocks: {
+      ListPoktBlock: {
         items: Block[];
       };
     };
@@ -22,12 +22,39 @@ export default async function getBlockProducer(
 
   const query = `
     query {
-      blocks(
-        page: 1,
-        limit: 30,
-        search: "",
-        filter: "[[\\"producer\\",\\"=\\",\\"${nodeAddress}\\"],\\"and\\",[\\"time\\",\\">=\\",\\"${startDate.toISOString()}\\"],\\"and\\",[\\"time\\",\\"<=\\",\\"${endDate.toISOString()}\\"]]",
-        sort: [{property: "height", direction: -1}]
+      ListPoktBlock(
+        pagination: {
+          limit: 30,
+          filter: {
+            operator: AND,
+            properties: [
+              {
+                  property: "producer",
+                  operator: EQ,
+                  type: STRING,
+                  value: "${nodeAddress}"
+              }
+            ],
+            filters: [{
+              operator: AND,
+              properties: [
+                {
+                  property: "time",
+                  operator: GTE,
+                  type: STRING,
+                  value: "${startDate.toISOString()}"
+                },
+                {
+                  property: "time",
+                  operator: LTE,
+                  type: STRING,
+                  value: "${endDate.toISOString()}"
+                }
+              ],
+            }]
+          },
+          sort: [{property: "height", direction: -1}]
+        },
       ) {
         items {
           _id
@@ -43,7 +70,7 @@ export default async function getBlockProducer(
   return poktScan
     .post('', { query })
     .then((response: getBlockProducerResponse) => {
-      return response.data.data.blocks.items;
+      return response.data.data.ListPoktBlock.items;
     })
     .catch((error: Error) => {
       console.error('Failed to retrieve BlockProducerRewards: ', error);

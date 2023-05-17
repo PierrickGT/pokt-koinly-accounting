@@ -6,7 +6,7 @@ import { Block, NodeRelay } from '../types';
 type getRelaysResponse = {
   data: {
     data: {
-      getNodeRelays: {
+      ListPoktRelays: {
         items: NodeRelay[];
       };
     };
@@ -24,26 +24,50 @@ export default async function getRelays(
 
   const query = `
     query {
-      getNodeRelays(
-        input: {
-          page: 1,
-          pageSize: 1000,
-          addresses: ["${nodeAddress}"],
-          sortBy: height,
-          sortDirection: asc,
-          fromHeight: ${firstBlock.height},
-          toHeight: ${lastBlock.height},
+      ListPoktRelays(
+        pagination: {
+          limit: 1000,
+          filter: {
+            operator: AND,
+            properties: [
+              {
+                  property: "node",
+                  operator: EQ,
+                  type: STRING,
+                  value: "${nodeAddress}"
+              }
+            ],
+            filters: [{
+              operator: AND,
+              properties: [
+                {
+                  property: "height",
+                  operator: GTE,
+                  type: STRING,
+                  value: "${firstBlock.height}"
+                },
+                {
+                  property: "height",
+                  operator: LTE,
+                  type: STRING,
+                  value: "${lastBlock.height}"
+                }
+              ]
+            }]
+          },
+          sort: [{property: "height", direction: 1}]
         }
       ) {
         items {
-          address
+          node
           amount
+          earning_multiplier
+          stake_weight
+          base_multiplier
           chain
           block_time
           height
-          serviced {
-            tx_proof
-          }
+          tx_proof
         }
       }
     }
@@ -52,7 +76,7 @@ export default async function getRelays(
   return poktScan
     .post('', { query })
     .then((response: getRelaysResponse) => {
-      return response.data.data.getNodeRelays.items;
+      return response.data.data.ListPoktRelays.items;
     })
     .catch((error: Error) => {
       console.error('Failed to retrieve NodeRelay: ', error);

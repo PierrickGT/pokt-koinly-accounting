@@ -1,1 +1,1 @@
-export const POKTSCAN_API_ENDPOINT = 'https://fallback-api.poktscan.com/api/graphql';
+export const POKTSCAN_API_ENDPOINT = 'https://api.poktscan.com/poktscan/api/graphql';

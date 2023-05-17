@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 
 import getRelays from '../query/getRelays';
 
-import { formatChain, relayFee } from '../helpers';
+import { formatChain, relayFee, toDecimal } from '../helpers';
 import { NodeRelay, KoinlyTransaction } from '../types';
 
 export default async function getNodeRelays(
@@ -16,15 +16,15 @@ export default async function getNodeRelays(
   const rewards: KoinlyTransaction[] = [];
 
   nodeRelays.map(async (relay: NodeRelay) => {
-    const date = new Date(Number(relay.block_time));
+    const date = new Date(relay.block_time);
 
     rewards.push({
       'Koinly Date': date,
-      Amount: relay.amount - relayFee,
+      Amount: toDecimal(relay.amount * relay.earning_multiplier) - relayFee,
       Currency: 'POKT',
       Label: 'mining',
       Description: `Relays for ${formatChain(relay.chain)} chain`,
-      TxHash: relay.serviced[0].tx_proof,
+      TxHash: relay.tx_proof,
     });
   });
 

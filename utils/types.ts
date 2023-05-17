@@ -1,5 +1,4 @@
 /* POKT types */
-
 export type Block = {
   _id: string;
   height: number;
@@ -84,23 +83,17 @@ type StakeByChain = {
   amount: bigint;
 };
 
-type ServicedNodeRelays = {
-  tx_proof: string;
-  tx_claim: string;
-  address: string;
-  total_relays: bigint;
-  relay_chain: string;
-};
-
 export type NodeRelay = {
   address: string;
   chain: string;
   height: number;
   amount: number;
   block_time: string;
-  token_multiplier: number;
+  base_multiplier: number;
+  earning_multiplier: number;
+  stake_weight: number;
   total_relays: bigint;
-  serviced: [ServicedNodeRelays];
+  tx_proof: string;
 };
 
 export type PageInfo = {
@@ -134,7 +127,6 @@ export type Transaction = {
 };
 
 /* App types */
-
 export type KoinlyTransaction = {
   'Koinly Date': Date;
   Amount: number;

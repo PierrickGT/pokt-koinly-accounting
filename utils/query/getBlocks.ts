@@ -5,7 +5,7 @@ import { Block } from '../types';
 type getBlockResponse = {
   data: {
     data: {
-      blocks: {
+      ListPoktBlock: {
         items: Block[];
       };
     };
@@ -21,12 +21,28 @@ export async function getFirstBlock(
 
   const query = `
     query {
-      blocks(
-        page: 1,
-        limit: 1,
-        search: "",
-        filter: "[[\\"time\\",\\">=\\",\\"${startDate.toISOString()}\\"],\\"and\\",[\\"time\\",\\"<=\\",\\"${endDate.toISOString()}\\"]]",
-        sort: [{property: "height", direction: 1}]
+      ListPoktBlock(
+        pagination: {
+          limit: 1,
+          filter: {
+            operator: AND,
+            properties: [
+              {
+                property: "time",
+                operator: GTE,
+                type: STRING,
+                value: "${startDate.toISOString()}"
+              },
+              {
+                property: "time",
+                operator: LTE,
+                type: STRING,
+                value: "${endDate.toISOString()}"
+              }
+            ]
+          },
+          sort: [{property: "height", direction: 1}]
+        }
       ) {
         items {
           height
@@ -39,7 +55,7 @@ export async function getFirstBlock(
   return poktScan
     .post('', { query })
     .then((response: getBlockResponse) => {
-      return response.data.data.blocks.items[0];
+      return response.data.data.ListPoktBlock.items[0];
     })
     .catch((error: Error) => {
       console.error('Failed to retrieve first block: ', error);
@@ -55,12 +71,28 @@ export async function getLastBlock(
 
   const query = `
     query {
-      blocks(
-        page: 1,
-        limit: 1,
-        search: "",
-        filter: "[[\\"time\\",\\">=\\",\\"${startDate.toISOString()}\\"],\\"and\\",[\\"time\\",\\"<=\\",\\"${endDate.toISOString()}\\"]]",
-        sort: [{property: "height", direction: -1}]
+      ListPoktBlock(
+        pagination: {
+          limit: 1,
+          filter: {
+            operator: AND,
+            properties: [
+              {
+                property: "time",
+                operator: GTE,
+                type: STRING,
+                value: "${startDate.toISOString()}"
+              },
+              {
+                property: "time",
+                operator: LTE,
+                type: STRING,
+                value: "${endDate.toISOString()}"
+              }
+            ]
+          },
+          sort: [{property: "height", direction: -1}]
+        }
       ) {
         items {
           height
@@ -73,7 +105,7 @@ export async function getLastBlock(
   return poktScan
     .post('', { query })
     .then((response: getBlockResponse) => {
-      return response.data.data.blocks.items[0];
+      return response.data.data.ListPoktBlock.items[0];
     })
     .catch((error: Error) => {
       console.error('Failed to retrieve last block: ', error);
